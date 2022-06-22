@@ -42,9 +42,9 @@ const UsuariosCadastrar = () => {
         </label>
         <label>Tipo
           <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
-            <option value={1}>Ford</option>
-            <option value={2}>Volvo</option>
-            <option value={3}>Fiat</option>
+            <option value={1}>Free</option>
+            <option value={2}>Vip</option>
+            <option value={3}>Premium</option>
           </select>
         </label>
         <label>Senha:
