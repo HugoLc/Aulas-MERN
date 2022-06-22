@@ -1,4 +1,7 @@
 const Usuario = require('../models/usuarios.model')
+const jwt = require('jsonwebtoken')
+const secret = 'segredo'
+
 
 //funções que seram usadas nas routes
 
@@ -65,6 +68,33 @@ module.exports = {
         const user = await Usuario.findByIdAndUpdate({ _id }, data, { new: true })
 
         res.json(user)
-    }
+    },
 
+
+    async login(req, res) {
+        const {email, senha} = req.body;
+        Usuario.findOne({email_usuario: email, tipo_usuario:3}, function(err, user){
+            if(err){
+                console.log(err);
+                res.status(200).json({erro: "erro no servidor. tente novamente"})
+            }
+            else if(!user){
+                res.status(200).json({status:2, error: "email ou senha não conferem"})                
+            }
+            else{
+                const payload = {email};
+                const token = jwt.sign(payload, secret, {
+                    expiresIn: '24h'
+                })
+                res.cookie('token', token, {httpOnly:true})
+                res.status(200).json({
+                    status:1,
+                    auth:true,
+                    token:token, 
+                    id_client: user._id,
+                    user_name:user.nome_usuario
+                })
+            }
+        })
+    }
 }
