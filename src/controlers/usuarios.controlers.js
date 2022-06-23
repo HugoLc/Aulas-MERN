@@ -76,7 +76,7 @@ module.exports = {
         Usuario.findOne({email_usuario: email, tipo_usuario:3}, function(err, user){
             if(err){
                 console.log(err);
-                res.status(200).json({erro: "erro no servidor. tente novamente"})
+                res.status(200).json({error: "erro no servidor. tente novamente"})
             }
             else if(!user){
                 res.status(200).json({status:2, error: "email ou senha não conferem"})                

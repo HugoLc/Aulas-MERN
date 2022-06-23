@@ -17,6 +17,7 @@ import produtosCadastrar from "./pages/admin/produtos/produtos.cadastrar";
 import Home from "./pages/client/home";
 //import Painel from "./pages/client/painel"
 import ProdutosDetails from "./pages/client/produto/produtos.details";
+import Login from "./pages/admin/login";
 
 export default function ProjectRoutes() {
     return (
@@ -26,6 +27,7 @@ export default function ProjectRoutes() {
                 <Route path='/p/:idProduto' element={<ProdutosDetails />} />
 
                 <Route path='/admin' element={<Dashboard />} />
+                <Route path='/admin/login' element={<Login />} />
 
                 <Route path='/admin/produtos' element={<ProdutosListagem />} />
                 <Route path='/admin/produtos/cadastrar' element={<produtosCadastrar />} />
