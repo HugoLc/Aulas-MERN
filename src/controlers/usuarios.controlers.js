@@ -79,7 +79,11 @@ module.exports = {
                 res.status(200).json({error: "erro no servidor. tente novamente"})
             }
             else if(!user){
-                res.status(200).json({status:2, error: "email ou senha não conferem"})                
+                res.status(200).json({status:2, error: "email não encontrado"})                
+            }
+            // MELHORAR AUTENTICAÇÃO. DADOS CRIPTOGRAFADOS
+            else if(user && user.senha_usuario !== senha){
+                res.status(200).json({error: "senha não confere"})
             }
             else{
                 const payload = {email};
@@ -96,5 +100,22 @@ module.exports = {
                 })
             }
         })
+    },
+
+    async checktoken(req,res){
+        const token = req.body.token || req.query.token || req.cookies.token || req.headers[x-access-token]
+        if(!token){
+            res.json({status:401, msg:'nao autorizado, token inexistente'})
+        }
+        else{
+            jwt.verify(token, secret, function(err, decoded){
+                if(err){
+                    res.json({status:401, msg:'nao autorizado, token invalido'})
+                }
+                else{
+                    res.json({status:200})
+                }
+            })
+        }
     }
 }

@@ -25,4 +25,16 @@ DataSchema.pre('save',function(next){
     this.senha_usuario = bcrypt.hashSync(this.senha_usuario,10)
     next()
 })
+
+DataSchema.methods.isCorrectPassword = function(password, callback){
+    bycript.compare(password,this.senha_usuario, function(err,same){
+        if(err){
+            callback(err);
+        }
+        else{
+            callback(err, same)
+        }
+    })
+}
+
 module.exports = usuarios;

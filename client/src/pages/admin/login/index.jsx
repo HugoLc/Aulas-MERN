@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import api from '../../../services/api'
+import {login, setUsuario, setNomeUsuario} from '../../../services/auth'
 
 const Login = () => {
 
@@ -17,6 +18,14 @@ const Login = () => {
     if(res.status === 200){
         if(res.data.status === 1){
             // local storage
+            login(res.data.token)
+            setUsuario(res.data.id_client)
+            setNomeUsuario(res.data.user_name)
+
+            window.location.href = '/admin'
+        }
+        else if(res.data.status === 2){
+            alert(res.data.error)
         }
         else{
             alert(res.data.error)
@@ -32,7 +41,7 @@ const Login = () => {
   return (
     <>
         <div>Login</div>
-        <form>
+        {/* <form> */}
             <label > Email
                 <input 
                     type="text"
@@ -50,7 +59,7 @@ const Login = () => {
             <button onClick={()=> handleSubmit()}>
                 Submit
             </button>
-        </form>
+        {/* </form> */}
     </>
   )
 }
